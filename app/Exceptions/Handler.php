@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -29,6 +31,8 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
      * @param  \Exception  $exception
      * @return void
      */
@@ -42,10 +46,51 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+
+        // MultiAuthUnAuthenticated
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'info' => Response::$statusTexts[Response::HTTP_UNAUTHORIZED],
+                'status' => Response::$statusTexts[Response::HTTP_UNAUTHORIZED],
+                'status_code' => Response::HTTP_UNAUTHORIZED
+            ])->setStatusCode(Response::HTTP_UNAUTHORIZED, Response::$statusTexts[Response::HTTP_UNAUTHORIZED]);
+        }
+
+        switch(array_get($exception->guards(), 0)) {
+            case 'user':
+                $login_route = 'user.login';
+                return redirect()->guest(route($login_route));
+                break;
+            case 'admin':
+                $login_route = 'admin.login';
+                return redirect()->guest(route($login_route));
+                break;
+            case 'web':
+                $login_route = 'login';
+                return redirect()->guest(route($login_route));
+                break;
+            default:
+                $login_route = 'login';
+                return redirect()->guest(route($login_route));
+                break;
+        }
+
     }
 }

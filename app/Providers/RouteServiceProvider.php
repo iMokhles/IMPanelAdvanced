@@ -39,7 +39,42 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapUserRoutes();
+
+        $this->mapAdminRoutes();
+
+        $this->mapBackpackRoutes();
         //
+    }
+
+    /**
+     * Define the "user" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapUserRoutes()
+    {
+        Route::prefix('user')
+            ->middleware('user')
+            ->namespace($this->namespace.'\\User')
+            ->group(base_path('routes/user/user.php'));
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('admin')
+            ->namespace($this->namespace.'\\Admin')
+            ->group(base_path('routes/admin/admin.php'));
     }
 
     /**
@@ -69,5 +104,20 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "backpack" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapBackpackRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('admin')
+            ->namespace($this->namespace.'\\Backpack')
+            ->group(base_path('routes/backpack/custom.php'));
     }
 }
