@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Backpack;
 use App\Models\Backpack\MenuItem;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
+use Backpack\PageManager\app\Models\Page;
 use Illuminate\Foundation\Http\FormRequest as StoreRequest;
 use Illuminate\Foundation\Http\FormRequest as UpdateRequest;
 
@@ -79,6 +80,7 @@ class MenuItemCrudController extends CrudController
                 'label' => 'Type',
                 'type' => 'page_or_link',
                 'model' => MenuItem::class,
+                'page_model' => Page::class
             ],
         ]);
     }

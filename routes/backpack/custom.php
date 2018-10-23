@@ -23,3 +23,6 @@ CRUD::resource('menu-item', 'MenuItemCrudController');
 
 // Settings
 CRUD::resource('setting', 'SettingCrudController');
+
+// Pages
+CRUD::resource('page', 'PageCrudController');

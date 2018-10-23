@@ -19,6 +19,7 @@
 
               <li><a href='{{ backpack_url('/backup') }}'><i class='fa fa-hdd-o'></i> <span>Backups</span></a></li>
               <li><a href='{{ backpack_url('/log') }}'><i class='fa fa-terminal'></i> <span>Logs</span></a></li>
+              <li><a href="{{ backpack_url('/page') }}"><i class="fa fa-file-o"></i> <span>Pages</span></a></li>
               <li><a href="{{ backpack_url('/menu-item') }}"><i class="fa fa-list"></i> <span>Menu</span></a></li>
               <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
               <li><a href='{{ backpack_url('/setting') }}'><i class='fa fa-cog'></i> <span>Settings</span></a></li>
