@@ -7,7 +7,7 @@ IMPanel is a ready to use application with all [Backpack for Laravel](https://gi
 1) Run in your terminal:
 
 ``` bash
-$ git clone https://github.com/iMokhles/IMPanel.git IMPanel
+$ git clone https://github.com/iMokhles/IMPanelAdvanced.git IMPanel
 ```
 
 2) Set your database information in your .env file (use the .env.example as an example);
